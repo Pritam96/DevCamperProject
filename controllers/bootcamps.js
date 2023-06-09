@@ -36,5 +36,5 @@ exports.updateBootcamp = (req, res, next) => {
 exports.deleteBootcamp = (req, res, next) => {
   res
     .status(200)
-    .json({ success: true, msg: `delete bootcamp ${req.params.id}` }); 
+    .json({ success: true, msg: `delete bootcamp ${req.params.id}` });
 };
