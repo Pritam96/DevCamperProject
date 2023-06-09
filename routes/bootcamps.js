@@ -1,40 +1,27 @@
 // importing express
 const express = require('express');
 
+// importing methods from controllers by destructuring
+
+const {
+  getBootcamps,
+  getBootcamp,
+  createBootcamp,
+  updateBootcamp,
+  deleteBootcamp,
+} = require('../controllers/bootcamps');
+
 const router = express.Router();
 
-// creating routes
+// for url ('/') get & post
+router.route('/').get(getBootcamps).post(createBootcamp);
 
-// get all
-router.get('/', (req, res) => {
-  res.status(200).json({ success: true, msg: 'show all bootcamps' });
-});
-
-// get by id
-router.get('/:id', (req, res) => {
-  res
-    .status(200)
-    .json({ success: true, msg: `show bootcamp ${req.params.id}` });
-});
-
-// post
-router.post('/', (req, res) => {
-  res.status(200).json({ success: true, msg: 'create new bootcamp' });
-});
-
-// update / put
-router.put('/:id', (req, res) => {
-  res
-    .status(200)
-    .json({ success: true, msg: `update bootcamp ${req.params.id}` });
-});
-
-// delete
-router.delete('/:id', (req, res) => {
-  res
-    .status(200)
-    .json({ success: true, msg: `delete bootcamp ${req.params.id}` });
-});
+// for url ('/:id') get single bootcamp & update bootcamp & delete bootcamp
+router
+  .route('/:id')
+  .get(getBootcamp)
+  .put(updateBootcamp)
+  .delete(deleteBootcamp);
 
 // exporting the router
 module.exports = router;
