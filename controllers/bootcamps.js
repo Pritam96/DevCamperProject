@@ -1,6 +1,9 @@
 // importing models
 const Bootcamp = require('../models/Bootcamp');
 
+// importing errorResponse
+const ErrorResponse = require('../utils/errorResponse');
+
 // @desc    Get all bootcamps
 // @route   GET /api/v1/bootcamps
 // @access  Public
@@ -23,12 +26,17 @@ exports.getBootcamp = async (req, res, next) => {
     const bootcamp = await Bootcamp.findById(req.params.id);
     // validation for correctly formatted id which does not exist
     if (!bootcamp) {
-      return res.status(400).json({ success: false });
+      // using the custom error handler
+      return next(
+        new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
+      );
     }
     res.status(201).json({ success: true, data: bootcamp });
   } catch (error) {
-    // res.status(400).json({ success: false });
-    next(error); // passing error to express
+    // using the custom error handler
+    next(
+      new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
+    );
   }
 };
 
