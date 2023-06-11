@@ -1,3 +1,6 @@
+// importing models
+const Bootcamp = require('../models/Bootcamp');
+
 // @desc    Get all bootcamps
 // @route   GET /api/v1/bootcamps
 // @access  Public
@@ -17,8 +20,17 @@ exports.getBootcamp = (req, res, next) => {
 // @desc    Create new bootcamp
 // @route   POST /api/v1/bootcamps
 // @access  Private
-exports.createBootcamp = (req, res, next) => {
-  res.status(200).json({ success: true, msg: 'create new bootcamp' });
+exports.createBootcamp = async (req, res, next) => {
+  try {
+    const bootcamp = await Bootcamp.create(req.body);
+    // creating a resource, so 201
+    res.status(201).json({
+      success: true,
+      data: bootcamp,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc    Update bootcamp

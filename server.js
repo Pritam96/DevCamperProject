@@ -31,6 +31,9 @@ const app = express();
 // for using the following middleware
 // app.use(logger);
 
+// body parser
+app.use(express.json());
+
 // Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
