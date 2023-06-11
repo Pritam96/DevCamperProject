@@ -13,6 +13,9 @@ const morgan = require('morgan');
 // importing colors module
 const colors = require('colors');
 
+// importing custom error handler middleware
+const errorHandler = require('./middleware/error');
+
 // importing the connectDB from config
 const connectDB = require('./config/db');
 
@@ -41,6 +44,9 @@ if (process.env.NODE_ENV === 'development') {
 
 // mount routers
 app.use('/api/v1/bootcamps', bootcamps);
+
+// error handler (make sure it placed after router module)
+app.use(errorHandler);
 
 // loading PORT from env or initialize a PORT
 // if it not find the PORT value from env, it will initialize PORT with 5000
