@@ -1,6 +1,9 @@
 // importing mongoose
 const mongoose = require('mongoose');
 
+// importing slugify
+const slugify = require('slugify');
+
 // creating a schema
 const BootcampSchema = new mongoose.Schema({
   name: {
@@ -98,6 +101,13 @@ const BootcampSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+// create bootcamp slug from the name
+// pre() run before the operation 'save'
+BootcampSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true }); // lower:true for all lowercase
+  next(); // next() for move-on next piece of middleware
 });
 
 module.exports = mongoose.model('Bootcamp', BootcampSchema);
